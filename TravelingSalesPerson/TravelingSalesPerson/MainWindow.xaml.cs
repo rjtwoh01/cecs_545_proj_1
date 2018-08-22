@@ -17,14 +17,15 @@ using System.Diagnostics;
 
 namespace TravelingSalesPerson
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        private string tspFileName;
+        
         public MainWindow()
         {
             InitializeComponent();
+            tspFileName = "";
+            hideRunTime();
         }
 
         //Slightly modified for my purposes from: https://stackoverflow.com/questions/10315188/open-file-dialog-and-select-a-file-using-wpf-controls-and-c-sharp
@@ -40,7 +41,29 @@ namespace TravelingSalesPerson
             {
                 string fileName = dlg.FileName;
                 Debug.WriteLine(fileName);
+                this.tspFileName = fileName;
             }
+
+            hideRunTime();
+        }
+
+        public void displayRunTime()
+        {
+            this.lblRunTime.Visibility = Visibility.Visible;
+            this.UpdateLayout();
+        }
+
+        public void hideRunTime()
+        {
+            this.lblRunTime.Visibility = Visibility.Hidden;
+            this.UpdateLayout();
+        }
+
+        private void btnSolve_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO: Implement solving code
+            //After solving code runs, then display run time
+            displayRunTime();
         }
     }
 }
