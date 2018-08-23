@@ -18,7 +18,9 @@ namespace TravelingSalesPerson
         private List<Point> tspPoints;
         private Canvas canvas;
         private Viewbox viewbox;
-        
+        private TSP tsp;
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -63,7 +65,7 @@ namespace TravelingSalesPerson
         private void plotPoints(List<Point> points)
         {
             int city = 1; //we start at the first city
-            TSP tsp = new TSP(points);
+            tsp = new TSP(points);
 
             // Initiate viewbox
             viewbox = new Viewbox();
@@ -82,7 +84,7 @@ namespace TravelingSalesPerson
                 ellipse.Fill = Brushes.Red;
                 ellipse.Stroke = Brushes.Black;
 
-                ellipse.ToolTip = "(" + point.X + "," + point.Y + ")";
+                ellipse.ToolTip = city + ": (" + point.X + "," + point.Y + ")";
 
                 // Position point on canvas
                 Canvas.SetLeft(ellipse, point.X + tsp.canvasOffset.X);
@@ -110,6 +112,7 @@ namespace TravelingSalesPerson
 
             //this.UpdateLayout();
             Debug.WriteLine("Finished populating points");
+            
         }
 
         #endregion
@@ -174,8 +177,13 @@ namespace TravelingSalesPerson
 
         private void btnSolve_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: Implement solving code
-            //After solving code runs, then display run time
+            Stopwatch sw = Stopwatch.StartNew();
+            List<Point> tempResult = tsp.BruteForce();
+            sw.Stop();
+
+            TimeSpan elapsedTime = sw.Elapsed;
+            this.lblRunTime.Content = "Run Time: " + elapsedTime.ToString();
+
             displayRunTime();
         }
 
