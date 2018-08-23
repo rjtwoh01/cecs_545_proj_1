@@ -82,7 +82,7 @@ namespace TravelingSalesPerson
                 newList.Add(tempList[i]);
                 for (int j = 0; j < tempList.Count(); j++)
                 {
-                    if (i == j) { continue; }
+                    if (i == j || j == 0) { continue; }
                     localDistance = distance(tempList[i], tempList[j]);
                     totalDistance += localDistance;
                     newList.Add(tempList[j]);
