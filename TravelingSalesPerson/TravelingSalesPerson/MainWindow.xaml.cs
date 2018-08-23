@@ -16,6 +16,8 @@ namespace TravelingSalesPerson
     {
         private string tspFileName;
         private List<Point> tspPoints;
+        private Canvas canvas;
+        private Viewbox viewbox;
         
         public MainWindow()
         {
@@ -97,23 +99,16 @@ namespace TravelingSalesPerson
 
         private void plotPoints(List<Point> points)
         {
-            // Create tab
-            TabItem tab = new TabItem();
-            tab.Header = System.IO.Path.GetFileNameWithoutExtension(this.tspFileName);
-
             int city = 1; //we start at the first city
             TSP tsp = new TSP(points);
 
-            // Create grid
-            Grid grid = new Grid();
-
-            // Create viewbox
-            Viewbox viewbox = new Viewbox();
+            // Initiate viewbox
+            viewbox = new Viewbox();
             viewbox.HorizontalAlignment = HorizontalAlignment.Stretch;
             viewbox.VerticalAlignment = VerticalAlignment.Stretch;
 
-            // Create canvas for drawing points on
-            Canvas canvas = new Canvas();
+            // Initiate canvas for drawing points on
+            canvas = new Canvas();
 
             foreach (Point point in points)
             {
@@ -125,32 +120,13 @@ namespace TravelingSalesPerson
                 ellipse.Stroke = Brushes.Black;
 
                 ellipse.ToolTip = "(" + point.X + "," + point.Y + ")";
-                Label cityLabel = new Label();
-                cityLabel.Content = city;
-                cityLabel.Foreground = Brushes.White;
-                cityLabel.ToolTip = ellipse.ToolTip;
-
-                if (city > 9)
-                {
-                    cityLabel.FontSize = 1.5;
-                    cityLabel.Padding = new Thickness(1.1, 0.9, 0, 0);
-                }
-                else
-                {
-                    cityLabel.FontSize = 2;
-                    cityLabel.Padding = new Thickness(1.4, 0.6, 0, 0);
-                }
 
                 // Position point on canvas
                 Canvas.SetLeft(ellipse, point.X + tsp.canvasOffset.X);
                 Canvas.SetTop(ellipse, point.Y + tsp.canvasOffset.Y);
 
-                // Position point label on canvas
-                Canvas.SetLeft(cityLabel, point.X + tsp.canvasOffset.X);
-                Canvas.SetTop(cityLabel, point.Y + tsp.canvasOffset.Y);
-
                 canvas.Children.Add(ellipse);
-                canvas.Children.Add(cityLabel);
+                //canvas.Children.Add(cityLabel);
 
                 city++;
             }
@@ -164,15 +140,9 @@ namespace TravelingSalesPerson
             viewbox.Child = canvas;
 
             // Add viewbox to grid
-            grid.Children.Add(viewbox);
+            mainGrid.Children.Add(viewbox);
 
-            // Add grid to tab
-            tab.Content = grid;
-
-            // Add tab to tabs control
-            tabs.Items.Add(tab);
-
-            Debug.WriteLine(grid.Children[0]);
+            Debug.WriteLine(mainGrid.Children[0]);
             //Debug.WriteLine(this.mainViewBox.Child);
 
             //this.UpdateLayout();
@@ -181,7 +151,8 @@ namespace TravelingSalesPerson
 
         public void emptyCanvas()
         {
-            //this.mainCanvas.Children.Clear();
+            if (canvas != null)
+                this.canvas.Children.Clear();
             this.tspPoints.Clear();
         }
     }

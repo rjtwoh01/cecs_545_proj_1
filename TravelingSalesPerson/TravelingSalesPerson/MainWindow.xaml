@@ -14,7 +14,7 @@
         <Button x:Name="btnFileUpload" Content="Select TSP File" HorizontalAlignment="Left" Height="31" Margin="10,10,0,0" VerticalAlignment="Top" Width="111" Click="btnFileUpload_Click"/>
         <Button x:Name="btnSolve" Content="Solve" HorizontalAlignment="Left" Height="31" Margin="129,10,0,0" VerticalAlignment="Top" Width="111" Click="btnSolve_Click"/>
         <Label x:Name="lblRunTime" Content="Run Time: " HorizontalAlignment="Left" Margin="254,10,0,0" VerticalAlignment="Top" Width="528" Height="31"/>
-        <TabControl HorizontalAlignment="Stretch" Margin="10,46,10,10" Name="tabs" VerticalAlignment="Stretch">
-        </TabControl>
+        <Grid x:Name="mainGrid" HorizontalAlignment="Left" Height="364" Margin="10,62,0,0" VerticalAlignment="Top" Width="825"/>
+
     </Grid>
 </Window>
