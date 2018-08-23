@@ -65,13 +65,14 @@ namespace TravelingSalesPerson
             var newList = new List<Point>();
             double localDistance = 0;
             totalDistance = 0;
+            int totalPermutations = 0;
 
             foreach (Point point in this.points)
             {
                 tempList.Add(point);
             }
 
-            for(int i = 0; i < tempList.Count() - 1; i++)
+            for (int i = 0; i < tempList.Count() - 1; i++)
             {
                 newList.Clear();
                 if (i > 0)
@@ -86,6 +87,7 @@ namespace TravelingSalesPerson
                     localDistance = distance(tempList[i], tempList[j]);
                     totalDistance += localDistance;
                     newList.Add(tempList[j]);
+                    totalPermutations++;
                 }
 
                 if (totalDistance > prevTotalDistance)
@@ -98,6 +100,7 @@ namespace TravelingSalesPerson
                 }
             }
 
+
             int city = 1;
             Debug.WriteLine("\nFinal list: ");
             foreach (Point point in finalList)
@@ -105,9 +108,10 @@ namespace TravelingSalesPerson
                 Debug.WriteLine(city + ": " + point);
                 city++;
             }
-            Debug.WriteLine("\nTotal Run Distance: " + totalDistance + "\n");
+            Debug.WriteLine("\nTotal Run Distance: " + totalDistance + "\nTotal Permutations: " + totalPermutations);
 
             return finalList;
         }
+
     }
 }
