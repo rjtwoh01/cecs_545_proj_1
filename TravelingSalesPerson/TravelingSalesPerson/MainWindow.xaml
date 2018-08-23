@@ -5,19 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelingSalesPerson"
         mc:Ignorable="d"
-        Title="Traveling Sales Person - Brute Force Solution" Height="450" Width="800">
+        Title="Traveling Sales Person - Brute Force Solution" Height="466.598" Width="852.561">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="43*"/>
-            <ColumnDefinition Width="23*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
         <Button x:Name="btnFileUpload" Content="Select TSP File" HorizontalAlignment="Left" Height="31" Margin="10,10,0,0" VerticalAlignment="Top" Width="111" Click="btnFileUpload_Click"/>
         <Button x:Name="btnSolve" Content="Solve" HorizontalAlignment="Left" Height="31" Margin="129,10,0,0" VerticalAlignment="Top" Width="111" Click="btnSolve_Click"/>
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="354" Margin="10,55,0,0" Stroke="Black" VerticalAlignment="Top" Width="772" Grid.ColumnSpan="2"/>
-        <Grid x:Name="mainGrid" HorizontalAlignment="Left" Height="354" Margin="10,55,0,0" VerticalAlignment="Top" Width="772" Grid.ColumnSpan="2">
-            <Canvas x:Name="mainCanvas" HorizontalAlignment="Left" Height="354" Margin="0,0,0,0" VerticalAlignment="Top" Width="772"/>
-        </Grid>
-        <Label x:Name="lblRunTime" Content="Run Time: " HorizontalAlignment="Left" Margin="254,10,0,0" VerticalAlignment="Top" Width="528" Height="31" Grid.ColumnSpan="2"/>
-
+        <Label x:Name="lblRunTime" Content="Run Time: " HorizontalAlignment="Left" Margin="254,10,0,0" VerticalAlignment="Top" Width="528" Height="31"/>
+        <TabControl HorizontalAlignment="Stretch" Margin="10,46,10,10" Name="tabs" VerticalAlignment="Stretch">
+        </TabControl>
     </Grid>
 </Window>
