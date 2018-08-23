@@ -28,46 +28,7 @@ namespace TravelingSalesPerson
             tspPoints = new List<Point>();
         }
 
-        //Slightly modified for my purposes from: https://stackoverflow.com/questions/10315188/open-file-dialog-and-select-a-file-using-wpf-controls-and-c-sharp
-        private void btnFileUpload_Click(object sender, RoutedEventArgs e)
-        {
-            emptyCanvas();
-            OpenFileDialog dlg = new OpenFileDialog();
-
-            dlg.DefaultExt = ".tsp";
-            dlg.Filter = "TSP Files|*.tsp";
-
-            Nullable<bool> result = dlg.ShowDialog();
-            if (result == true)
-            {
-                string fileName = dlg.FileName;
-                Debug.WriteLine(fileName);
-                this.tspFileName = fileName;
-                populatePoints();                
-            }
-
-            hideRunTime();
-            showSolveButton();
-        }
-
-        public void displayRunTime()
-        {
-            this.lblRunTime.Visibility = Visibility.Visible;
-            this.UpdateLayout();
-        }
-
-        public void hideRunTime()
-        {
-            this.lblRunTime.Visibility = Visibility.Hidden;
-            this.UpdateLayout();
-        }
-
-        private void btnSolve_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO: Implement solving code
-            //After solving code runs, then display run time
-            displayRunTime();
-        }
+        #region Data Points
 
         private void populatePoints()
         {
@@ -151,6 +112,10 @@ namespace TravelingSalesPerson
             Debug.WriteLine("Finished populating points");
         }
 
+        #endregion
+
+        #region UI Elements
+
         public void emptyCanvas()
         {
             if (canvas != null)
@@ -167,5 +132,53 @@ namespace TravelingSalesPerson
         {
             this.btnSolve.Visibility = Visibility.Visible;
         }
+
+        public void displayRunTime()
+        {
+            this.lblRunTime.Visibility = Visibility.Visible;
+            this.UpdateLayout();
+        }
+
+        public void hideRunTime()
+        {
+            this.lblRunTime.Visibility = Visibility.Hidden;
+            this.UpdateLayout();
+        }
+
+        #endregion
+
+        #region UI Events
+
+        //Slightly modified for my purposes from: https://stackoverflow.com/questions/10315188/open-file-dialog-and-select-a-file-using-wpf-controls-and-c-sharp
+        private void btnFileUpload_Click(object sender, RoutedEventArgs e)
+        {
+            emptyCanvas();
+            OpenFileDialog dlg = new OpenFileDialog();
+
+            dlg.DefaultExt = ".tsp";
+            dlg.Filter = "TSP Files|*.tsp";
+
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+            {
+                string fileName = dlg.FileName;
+                Debug.WriteLine(fileName);
+                this.tspFileName = fileName;
+                populatePoints();
+            }
+
+            hideRunTime();
+            showSolveButton();
+        }
+
+
+        private void btnSolve_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO: Implement solving code
+            //After solving code runs, then display run time
+            displayRunTime();
+        }
+
+        #endregion
     }
 }
