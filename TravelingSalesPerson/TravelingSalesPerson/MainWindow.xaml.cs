@@ -24,6 +24,7 @@ namespace TravelingSalesPerson
             InitializeComponent();
             tspFileName = "";
             hideRunTime();
+            hideSolveButton();
             tspPoints = new List<Point>();
         }
 
@@ -46,6 +47,7 @@ namespace TravelingSalesPerson
             }
 
             hideRunTime();
+            showSolveButton();
         }
 
         public void displayRunTime()
@@ -154,6 +156,16 @@ namespace TravelingSalesPerson
             if (canvas != null)
                 this.canvas.Children.Clear();
             this.tspPoints.Clear();
+        }
+
+        public void hideSolveButton()
+        {
+            this.btnSolve.Visibility = Visibility.Hidden;
+        }
+
+        public void showSolveButton()
+        {
+            this.btnSolve.Visibility = Visibility.Visible;
         }
     }
 }
