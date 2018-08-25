@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Diagnostics;
+using System.Collections;
 
 namespace TravelingSalesPerson
 {
@@ -16,8 +17,9 @@ namespace TravelingSalesPerson
         public Point minPoint;
         public List<TSPPoint> tspPoints;
         public List<Point> points;
+        public List<Point> tempFinalList;
 
-        private double totalDistance;
+        private double shortestDistance;
 
         public TSP(List<Point> points)
         {
@@ -25,6 +27,7 @@ namespace TravelingSalesPerson
             this.points = new List<Point>();
             this.minPoint = points.First();
             this.maxPoint = points.First();
+            this.tempFinalList = new List<Point>();
 
             foreach(Point point in points)
             {
@@ -49,7 +52,7 @@ namespace TravelingSalesPerson
             if (this.minPoint.Y > 0) { this.canvasOffset.X -= this.minPoint.X; }
             else { this.canvasOffset.X += this.minPoint.X; }
 
-            this.totalDistance = 0;
+            this.shortestDistance = 0;
         }
 
         public double distance(Point pointOne, Point pointTwo)
@@ -64,42 +67,47 @@ namespace TravelingSalesPerson
             var tempList = new List<Point>();
             var newList = new List<Point>();
             double localDistance = 0;
-            totalDistance = 0;
+            shortestDistance = 0;
             int totalPermutations = 0;
+            int initialCount = 0;
 
             foreach (Point point in this.points)
             {
                 tempList.Add(point);
             }
 
-            for (int i = 0; i < tempList.Count() - 1; i++)
-            {
-                newList.Clear();
-                if (i > 0)
-                {
-                    newList.Add(tempList.First());
-                }
-                double prevTotalDistance = totalDistance;
-                newList.Add(tempList[i]);
-                for (int j = 0; j < tempList.Count(); j++)
-                {
-                    if (i == j || j == 0) { continue; }
-                    localDistance = distance(tempList[i], tempList[j]);
-                    totalDistance += localDistance;
-                    newList.Add(tempList[j]);
-                    totalPermutations++;
-                }
+            initialCount = tempList.Count();
 
-                if (totalDistance > prevTotalDistance)
+            Point firstElement = tempList.First();
+            List<Point> rest = tempList;
+            rest.RemoveAt(0);
+
+            foreach(var perm in Permutate(rest, rest.Count()))
+            {
+                double shortestSoFar = shortestDistance;
+                localDistance = 0;
+                newList.Clear();
+                newList.Add(firstElement); //we start with the same city every time
+                foreach (var i in perm)
                 {
+                    //Console.WriteLine(i.ToString());
+                    string[] parts = i.ToString().Split(',');
+                    Point tempPoint = new Point(Convert.ToDouble(parts[0]), Convert.ToDouble(parts[1]));
+                    newList.Add(tempPoint);
+                }
+                newList.Add(firstElement); //we end with the same city every time
+                for (int i = 0; i < newList.Count(); i++)
+                {
+                    if ((i + 1) != newList.Count())
+                        localDistance = distance(newList[i], newList[i + 1]);
+                }
+                if (shortestDistance > localDistance || shortestDistance == 0)
+                {
+                    shortestDistance = localDistance;
                     finalList.Clear();
-                    foreach (Point point in newList)
-                    {
-                        finalList.Add(point);
-                    }
+                    finalList = newList.ToList(); //Save computation time of foreach
                 }
             }
-
 
             int city = 1;
             Debug.WriteLine("\nFinal list: ");
@@ -108,10 +116,34 @@ namespace TravelingSalesPerson
                 Debug.WriteLine(city + ": " + point);
                 city++;
             }
-            Debug.WriteLine("\nTotal Run Distance: " + totalDistance + "\nTotal Permutations: " + totalPermutations);
+            Debug.WriteLine("\nTotal Run Distance: " + shortestDistance + "\nTotal Permutations: " + totalPermutations);
 
             return finalList;
         }
 
+        #region Permutation
+
+        public static void RotateRight(IList sequence, int count)
+        {
+            object tmp = sequence[count - 1];
+            sequence.RemoveAt(count - 1);
+            sequence.Insert(0, tmp);
+        }
+
+        public static IEnumerable<IList> Permutate(IList sequence, int count)
+        {
+            if (count == 1) yield return sequence;
+            else
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    foreach (var perm in Permutate(sequence, count - 1))
+                        yield return perm;
+                    RotateRight(sequence, count);
+                }
+            }
+        }
+
+        #endregion
     }
 }
