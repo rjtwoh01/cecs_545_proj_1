@@ -19,7 +19,7 @@ namespace TravelingSalesPerson
         public List<Point> points;
         public List<Point> tempFinalList;
 
-        private double shortestDistance;
+        public double shortestDistance;
 
         public TSP(List<Point> points)
         {

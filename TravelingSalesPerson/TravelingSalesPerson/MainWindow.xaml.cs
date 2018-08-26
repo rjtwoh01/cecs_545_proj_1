@@ -115,6 +115,25 @@ namespace TravelingSalesPerson
             
         }
 
+        public void drawLines(List<Point> fastestRoute)
+        {
+            Polygon pathLine = new Polygon();
+            pathLine.Stroke = Brushes.Black;
+            for (int i = 0; i < fastestRoute.Count(); i++)
+            {
+                if ((i + 1) != fastestRoute.Count())
+                {
+                    //(fastestRoute[i], fastestRoute[i + 1]);
+                    Point point = fastestRoute[i];
+                    point.X += tsp.canvasOffset.X + 2;
+                    point.Y += tsp.canvasOffset.Y + 2;
+
+                    pathLine.Points.Add(point);
+                }
+            }
+            canvas.Children.Insert(0, pathLine);
+        }
+
         #endregion
 
         #region UI Elements
@@ -182,9 +201,11 @@ namespace TravelingSalesPerson
             sw.Stop();
 
             TimeSpan elapsedTime = sw.Elapsed;
-            this.lblRunTime.Content = "Run Time: " + elapsedTime.ToString();
+            string shortestDistance = String.Format("{0:0.00}", tsp.shortestDistance);
+            this.lblRunTime.Content = "Distance: "+ shortestDistance + "\nRun Time: " + elapsedTime.ToString();
 
             displayRunTime();
+            drawLines(tempResult);
         }
 
         #endregion
