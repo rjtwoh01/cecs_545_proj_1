@@ -119,8 +119,13 @@ namespace TravelingSalesPerson
         {
             Polygon pathLine = new Polygon();
             pathLine.Stroke = Brushes.Black;
+
             Ellipse ellipse = canvas.Children[0] as Ellipse;
-            ellipse.Fill = Brushes.Green;
+            if (ellipse != null)
+            {
+                ellipse.Fill = Brushes.Green;
+            }
+
             for (int i = 0; i < fastestRoute.Count(); i++)
             {
                 if ((i + 1) != fastestRoute.Count())
