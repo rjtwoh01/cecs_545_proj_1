@@ -99,7 +99,7 @@ namespace TravelingSalesPerson
                 for (int i = 0; i < newList.Count(); i++)
                 {
                     if ((i + 1) != newList.Count())
-                        localDistance = distance(newList[i], newList[i + 1]);
+                        localDistance += distance(newList[i], newList[i + 1]);
                 }
                 if (shortestDistance > localDistance || shortestDistance == 0)
                 {
