@@ -12,10 +12,8 @@ namespace TravelingSalesPerson
     class TSP
     {
         public Point canvasOffset; //Not sure if we need this yet
-        public double[,] matrix;
         public Point maxPoint;
         public Point minPoint;
-        public List<TSPPoint> tspPoints;
         public List<Point> points;
         public List<Point> tempFinalList;
 
@@ -23,7 +21,6 @@ namespace TravelingSalesPerson
 
         public TSP(List<Point> points)
         {
-            this.tspPoints = new List<TSPPoint>(points.Count);
             this.points = new List<Point>();
             this.minPoint = points.First();
             this.maxPoint = points.First();
@@ -36,13 +33,12 @@ namespace TravelingSalesPerson
 
             for (int i = 0; i < points.Count; i++)
             {
-                TSPPoint point = new TSPPoint(points[i], i);
-                this.tspPoints.Add(point);
+                Point point = new Point(points[i].X, points[i].Y);
 
-                if (point.point.X < this.minPoint.X) { this.minPoint.X = point.point.X; }
-                else if (point.point.X > this.maxPoint.X) { this.maxPoint.X = point.point.X; }
-                if (point.point.Y < this.minPoint.Y) { this.minPoint.Y = point.point.Y; }                
-                else if (point.point.Y > this.maxPoint.Y) { this.maxPoint.Y = point.point.Y; }
+                if (point.X < this.minPoint.X) { this.minPoint.X = point.X; }
+                else if (point.X > this.maxPoint.X) { this.maxPoint.X = point.X; }
+                if (point.Y < this.minPoint.Y) { this.minPoint.Y = point.Y; }                
+                else if (point.Y > this.maxPoint.Y) { this.maxPoint.Y = point.Y; }
             }
 
             this.canvasOffset = new Point(10, 10);
