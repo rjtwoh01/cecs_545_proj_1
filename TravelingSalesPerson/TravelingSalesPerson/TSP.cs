@@ -21,6 +21,7 @@ namespace TravelingSalesPerson
 
         public TSP(List<Point> points)
         {
+            //Values for UI purposes, creating offsets for the grid
             this.points = new List<Point>();
             this.minPoint = points.First();
             this.maxPoint = points.First();
@@ -78,25 +79,30 @@ namespace TravelingSalesPerson
             List<Point> rest = tempList;
             rest.RemoveAt(0);
 
+            //Iterate through each permutaion
             foreach(var perm in Permutate(rest, rest.Count()))
             {
                 double shortestSoFar = shortestDistance;
                 localDistance = 0;
                 newList.Clear();
                 newList.Add(firstElement); //we start with the same city every time
+                //Iterate through each element in this particular permutation
                 foreach (var i in perm)
                 {
-                    //Console.WriteLine(i.ToString());
+                    //We need to read the element as a string because it is no longer recognized as a point
+                    //Once we have the strong, it can be converted back to a point and added to the new list
                     string[] parts = i.ToString().Split(',');
                     Point tempPoint = new Point(Convert.ToDouble(parts[0]), Convert.ToDouble(parts[1]));
                     newList.Add(tempPoint);
                 }
                 newList.Add(firstElement); //we end with the same city every time
+                //Calculate the distance
                 for (int i = 0; i < newList.Count(); i++)
                 {
                     if ((i + 1) != newList.Count())
                         localDistance += distance(newList[i], newList[i + 1]);
                 }
+                //Check if this should be a canidate for the final list
                 if (shortestDistance > localDistance || shortestDistance == 0)
                 {
                     shortestDistance = localDistance;
@@ -118,6 +124,8 @@ namespace TravelingSalesPerson
         }
 
         #region Permutation
+
+        //The following two functions are implemented from: https://www.codeproject.com/Articles/43767/A-C-List-Permutation-Iterator
 
         public static void RotateRight(IList sequence, int count)
         {

@@ -67,12 +67,10 @@ namespace TravelingSalesPerson
             int city = 1; //we start at the first city
             tsp = new TSP(points);
 
-            // Initiate viewbox
             viewbox = new Viewbox();
             viewbox.HorizontalAlignment = HorizontalAlignment.Stretch;
             viewbox.VerticalAlignment = VerticalAlignment.Stretch;
 
-            // Initiate canvas for drawing points on
             canvas = new Canvas();
 
             foreach (Point point in points)
@@ -91,7 +89,6 @@ namespace TravelingSalesPerson
                 Canvas.SetTop(ellipse, point.Y + tsp.canvasOffset.Y);
 
                 canvas.Children.Add(ellipse);
-                //canvas.Children.Add(cityLabel);
 
                 city++;
             }
@@ -101,14 +98,10 @@ namespace TravelingSalesPerson
             Debug.WriteLine(canvas.Height);
             Debug.WriteLine(canvas.Width);
 
-            // Add canvas to viewbox
             viewbox.Child = canvas;
-
-            // Add viewbox to grid
             mainGrid.Children.Add(viewbox);
 
             Debug.WriteLine(mainGrid.Children[0]);
-            //Debug.WriteLine(this.mainViewBox.Child);
 
             //this.UpdateLayout();
             Debug.WriteLine("Finished populating points");
